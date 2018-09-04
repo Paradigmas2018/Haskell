@@ -1,0 +1,82 @@
+
+{-Module      : Unit
+Description : 
+Modulo para controle de unidades como criação, e alteração dos atributos durante o jogo;
+-}
+
+module Unit
+(
+  Unit,
+  Class,
+  createUnit,
+  setHP,
+  setAttack,
+  setDefense,
+  setSpeed,
+  getName,
+  getHP,
+  getMaxHP,
+  getAttack,
+  getDefense,
+  getSpeed
+) where
+
+type UnitName = String -- Nome da Unidade
+type HP = Int -- Pontos de vida atual
+type MaxHP = Int -- Pontos de vida Maximo
+type Attack = Int -- Pontos de ataque
+type Defense = Int -- Pontos de defesa
+type Speed = Int -- Pontos de Velocidade
+type IsDead = Bool -- Verificador se a unidade está viva
+type IsPlayer = Bool -- Verifica se é controlada pelo jogador
+data Class = Archer | Warrior | Wizard deriving (Show) -- Classe da unidade, para determinar habilidade
+data Attributes = Attributes (HP, MaxHP, Attack, Defense, Speed) deriving (Show)  -- Representação de todos atributos em uma tupla
+data Unit = Unit (UnitName, Class, Attributes, IsDead, IsPlayer)  deriving (Show) -- Dados da Unidade
+
+-- Retorna o nome da Unidade
+getName :: Unit -> String
+getName (Unit ("", _, _, _, _)) = "unknown"
+getName (Unit (name, Archer, _, _, _)) = name ++ ", o arqueiro"
+getName (Unit (name, Warrior, _, _, _)) = name ++ ", o guerreiro"
+getName (Unit (name, Wizard, _, _, _)) = name ++ ", o mago"
+
+-- Retorna o HP atual da unidade
+getHP :: Unit -> Int
+getHP (Unit (_, _, Attributes (hp, _, _, _, _), _, _)) = hp
+
+-- Retorna o HP maximo da unidade
+getMaxHP :: Unit -> Int
+getMaxHP (Unit (_, _, Attributes (_, maxHP, _, _, _), _, _)) = maxHP
+
+-- Retorna os pontos de ataque atual da unidade
+getAttack :: Unit -> Int
+getAttack (Unit (_, _, Attributes (_, _, atk, _, _), _, _)) = atk
+
+-- Retorna os pontos de defesa atual da unidade
+getDefense :: Unit -> Int
+getDefense (Unit (_, _, Attributes (_, _, _, def, _), _, _)) = def
+
+-- Retorna os pontos de velocidade atual da unidade
+getSpeed :: Unit -> Int
+getSpeed (Unit (_, _, Attributes (_, _, _, _, spd), _, _)) = spd
+
+-- Dado os atributos, uma nova unidade é criada
+createUnit :: UnitName -> Class -> HP -> Attack -> Defense -> Speed -> IsPlayer -> Unit
+createUnit unitName clas maxHP atk def spd player = (Unit (unitName, clas, (Attributes (maxHP, maxHP, atk, def, spd)), False, player))
+
+-- Dado uma unidade e os pontos de vida, uma nova unidade é retornada com os pontos de vida atualizados
+setHP :: Unit -> Int -> Unit
+setHP (Unit (name, clas, (Attributes (oldHP, maxHP, atk, def, spd)), dead, player)) newHP = (Unit (name, clas, Attributes (newHP, maxHP, atk, def, spd), dead, player))
+
+-- Dado uma unidade e os pontos de ataque, uma nova unidade é retornada com os pontos de ataque atualizados
+setAttack :: Unit -> Int -> Unit
+setAttack (Unit ( name, clas, (Attributes (hp,maxHP, oldAtk, def, spd)), dead, player)) newAtk = (Unit ( name, clas, Attributes (hp,maxHP, newAtk, def, spd), dead, player))
+
+-- Dado uma unidade e os pontos de defesa, uma nova unidade é retornada com os pontos de defesa atualizados
+setDefense :: Unit -> Int -> Unit
+setDefense (Unit ( name, clas, (Attributes (hp,maxHP, atk, oldDef, spd)), dead, player)) newDef = (Unit ( name, clas, Attributes (hp,maxHP, atk, newDef, spd), dead, player))
+
+-- Dado uma unidade e os pontos de velocidade, uma nova unidade é retornada com os pontos de velocidade atualizados
+setSpeed :: Unit -> Int -> Unit
+setSpeed (Unit (name, clas, (Attributes (hp,maxHP, atk, def, oldSpd)), dead, player)) newSpd = (Unit (name, clas, Attributes (hp,maxHP, atk, def, newSpd), dead, player))
+
