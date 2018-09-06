@@ -6,20 +6,25 @@ Modulo para controle de unidades como criação, e alteração dos atributos dur
 
 module Unit
 (
-  Unit,
-  Class,
+  Unit(..),
+  Class(..),
+  Attributes(..),
+  showUnit,
   createUnit,
   setHP,
   setAttack,
   setDefense,
   setSpeed,
   getName,
+  getClass,
   getHP,
   getMaxHP,
   getAttack,
   getDefense,
   getSpeed
 ) where
+
+import Data.List.Split
 
 type UnitName = String -- Nome da Unidade
 type HP = Int -- Pontos de vida atual
@@ -29,9 +34,21 @@ type Defense = Int -- Pontos de defesa
 type Speed = Int -- Pontos de Velocidade
 type IsDead = Bool -- Verificador se a unidade está viva
 type IsPlayer = Bool -- Verifica se é controlada pelo jogador
-data Class = Archer | Warrior | Wizard deriving (Show) -- Classe da unidade, para determinar habilidade
-data Attributes = Attributes (HP, MaxHP, Attack, Defense, Speed) deriving (Show)  -- Representação de todos atributos em uma tupla
-data Unit = Unit (UnitName, Class, Attributes, IsDead, IsPlayer)  deriving (Show) -- Dados da Unidade
+data Class = Archer | Warrior | Wizard deriving (Show, Read) -- Classe da unidade, para determinar habilidade
+data Attributes = Attributes (HP, MaxHP, Attack, Defense, Speed) deriving (Show, Read)  -- Representação de todos atributos em uma tupla
+data Unit = Unit (UnitName, Class, Attributes, IsDead, IsPlayer)  deriving (Show, Read) -- Dados da Unidade
+
+showUnit :: Unit -> [Char]
+showUnit (Unit (name, clas, Attributes (hp, maxhp, atk, def, spd), dead, player)) = do
+  (name) ++","++ 
+    (show clas)  ++","++  
+      (show hp) ++","++
+        (show maxhp) ++","++
+          (show atk) ++","++
+            (show def) ++","++
+              (show spd) ++","++
+                (show dead) ++","++ 
+                  (show player)
 
 -- Retorna o nome da Unidade
 getName :: Unit -> String
@@ -39,6 +56,9 @@ getName (Unit ("", _, _, _, _)) = "unknown"
 getName (Unit (name, Archer, _, _, _)) = name ++ ", o arqueiro"
 getName (Unit (name, Warrior, _, _, _)) = name ++ ", o guerreiro"
 getName (Unit (name, Wizard, _, _, _)) = name ++ ", o mago"
+
+getClass :: Unit -> Class
+getClass (Unit (_, cls, _, _, _)) = cls
 
 -- Retorna o HP atual da unidade
 getHP :: Unit -> Int
