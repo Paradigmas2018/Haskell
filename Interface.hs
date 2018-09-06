@@ -1,6 +1,7 @@
 module Interface
 (
   drawStartScreen,
+  drawUnitStat
 ) where
 
 import Unit

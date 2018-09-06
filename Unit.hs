@@ -21,7 +21,8 @@ module Unit
   getMaxHP,
   getAttack,
   getDefense,
-  getSpeed
+  getSpeed,
+  isDead
 ) where
 
 import Data.List.Split
@@ -34,9 +35,9 @@ type Defense = Int -- Pontos de defesa
 type Speed = Int -- Pontos de Velocidade
 type IsDead = Bool -- Verificador se a unidade está viva
 type IsPlayer = Bool -- Verifica se é controlada pelo jogador
-data Class = Archer | Warrior | Wizard deriving (Show, Read) -- Classe da unidade, para determinar habilidade
-data Attributes = Attributes (HP, MaxHP, Attack, Defense, Speed) deriving (Show, Read)  -- Representação de todos atributos em uma tupla
-data Unit = Unit (UnitName, Class, Attributes, IsDead, IsPlayer)  deriving (Show, Read) -- Dados da Unidade
+data Class = Archer | Warrior | Wizard deriving (Show, Read, Eq) -- Classe da unidade, para determinar habilidade
+data Attributes = Attributes (HP, MaxHP, Attack, Defense, Speed) deriving (Show, Read, Eq)  -- Representação de todos atributos em uma tupla
+data Unit = DeadUnit | Unit (UnitName, Class, Attributes, IsDead, IsPlayer)  deriving (Show, Read, Eq) -- Dados da Unidade
 
 showUnit :: Unit -> [Char]
 showUnit (Unit (name, clas, Attributes (hp, maxhp, atk, def, spd), dead, player)) = do
@@ -100,3 +101,5 @@ setDefense (Unit ( name, clas, (Attributes (hp,maxHP, atk, oldDef, spd)), dead, 
 setSpeed :: Unit -> Int -> Unit
 setSpeed (Unit (name, clas, (Attributes (hp,maxHP, atk, def, oldSpd)), dead, player)) newSpd = (Unit (name, clas, Attributes (hp,maxHP, atk, def, newSpd), dead, player))
 
+isDead :: Unit -> Bool
+isDead unit = if (getHP unit) <= 0 then True else False
