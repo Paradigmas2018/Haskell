@@ -8,22 +8,22 @@ data Action = Attack (Unit, Unit) | Heal (Unit)
 
 actionValue :: Action -> Int
 actionValue (Attack (hero, enemy)) 
-    | getClass hero == Archer && getClass enemy == Warrior = -((div (attack*speed) 10) + defense) * boostDown
-    | getClass hero == Archer && getClass enemy == Wizard = -((div (attack*speed) 10) + defense) * boostUp
-    | getClass hero == Wizard && getClass enemy == Archer = -((div (attack*speed) 10) + defense) * boostDown
-    | getClass hero == Wizard && getClass enemy == Warrior = -((div (attack*speed) 10) + defense) * boostUp
-    | getClass hero == Warrior && getClass enemy == Wizard = -((div (attack*speed) 10) + defense) * boostDown
-    | getClass hero == Warrior && getClass enemy == Archer = -((div (attack*speed) 10) + defense) * boostUp
-    | otherwise = -(div (attack*speed) 10) + defense
-    where attack  = getAttack hero
-          speed   = getSpeed hero
-          defense = (getDefense enemy)
-          boostUp = 3
-          boostDown = 3
+    | getClass hero == Archer && getClass enemy == Warrior = round (-(((attack*speed)/3) - defense * (boostDef)))
+    | getClass hero == Archer && getClass enemy == Wizard = round (-(( (attack*speed)/3) * (boostAtk) - defense))
+    | getClass hero == Wizard && getClass enemy == Archer = round (-(((attack*speed)/3) - defense * (boostDef))) 
+    | getClass hero == Wizard && getClass enemy == Warrior = round (-(((attack*speed)/3) * (boostAtk) - defense)) 
+    | getClass hero == Warrior && getClass enemy == Wizard = round (-(((attack*speed)/3) - defense * (boostDef)))
+    | getClass hero == Warrior && getClass enemy == Archer = round (-(((attack*speed)/3) * (boostAtk) - defense)) 
+    | otherwise = round (-(((attack*speed)/3) + defense))
+    where attack  = fromIntegral (getAttack hero) :: Float
+          speed   = fromIntegral (getSpeed hero) :: Float
+          defense = fromIntegral (getDefense enemy) :: Float
+          boostAtk = 1.2
+          boostDef = 1.3
 actionValue (Heal (unit)) = (if (hp + potion) >= maxHP then maxHP-hp else potion)
     where hp = getHP unit
           maxHP = getMaxHP unit
-          potion = div (getMaxHP unit) 3
+          potion = div (getMaxHP unit) 6
 
 
 updateUnit :: Unit -> Action -> Unit 
