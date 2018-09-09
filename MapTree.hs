@@ -6,8 +6,7 @@ module MapTree (
     actionTree
 ) where
 
-import System.IO
-import Data.List
+import Unit
 
 type NorthVillage = String -- Villages localized in north
 type SouthVillage = String -- Villages localized in south
@@ -20,25 +19,32 @@ data Village = NorthVillage | SouthVillage | EastVillage | WestVillage deriving 
 -- Tree Structure
 type HistoryString = String
 type Value = Int
+type Enemy = Unit
 
-data MapNode = MapNode(Village, Value, HistoryString) -- MapTree node
+data MapNode = MapNode(Village, Enemy, HistoryString) -- MapTree node
 
 -- FIXME: - Delete - User for testing pourpose
 data Tree a = Null
-          | Node a (Tree a) (Tree a) deriving(Show)
+            | Node a (Tree a) (Tree a) deriving(Show)
 
 -- Tree for each Village
 data MapTree a = Null
-               | Node Village (MapTree a) (MapTree a) (MapTree a) (MapTree a)  deriving (Show)
+               | MapNode (MapTree a) (MapTree a) deriving (Show)
+
+Node 5 (Node 3 Null Null) (Node 2 Null Null)
 
 -- Create MapTree
-getMapTree :: MapTree [Char]
-getMapTree = 
-    Node "Warrior"
-      (Node "North Village" Null Null)
-      (Node "South Village" Null Null)
-      (Node "East Village" Null Null)
-      (Node "West Village" Null Null)
+getMapTree :: Unit -> MapTree [Char]
+getMapTree = ("Map"
+                (Node "Warrior"
+                    (Node "North Village" Null Null)
+                    (Node "South Village" Null Null)
+                )
+                (Node "Archer"
+                    (Node "East Village" Null Null)
+                    (Node "West Village" Null Null)
+                )
+            )
 
 -- Create MapTree node
 createMapNode :: Village -> Value -> HistoryString -> MapNode
@@ -49,6 +55,7 @@ sumNodes :: Num a => Tree a -> a
 sumNodes Null = 0
 sumNodes (Node n t1 t2) = n + sumNodes t1 + sumNodes t2
 
+-- 
 getBranch :: Tree a -> String -> Tree a
 getBranch Null value = Null
 getBranch Tree a value = do
@@ -60,8 +67,8 @@ getBranch Tree a value = do
 getHistoryString :: MapNode -> String
 getHistoryString (MapNode((_, _, h))) = h 
 
-getValue :: MapNode -> Int
-getValue (MapNode(_, v, _)) = v
+getValue :: MapNode -> Enemy
+getValue (MapNode(_, e, _)) = e
 
 getVillageName :: MapNode -> String
 getVillageName (MapNode(n, _, _)) = n

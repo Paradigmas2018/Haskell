@@ -5,6 +5,7 @@ module Interface
 ) where
 
 import Unit
+import MapTree
 import System.Console.ANSI
 import System.IO
 import System.Exit
