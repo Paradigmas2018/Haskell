@@ -12,6 +12,12 @@ Projeto criado com intuito acadêmico. Objetiva-se desenvolver conceitos de ling
 
 ## 3. Executando
 
+* Adicionar pacotes Externos:
+
+````
+  cabal install split
+````
+
 * Criar executável:
 
 ````
