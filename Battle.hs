@@ -30,24 +30,13 @@ updateUnit :: Unit -> Action -> Unit
 updateUnit unit action = setHP unit (health + effect)
     where effect = actionValue action
           health = getHP unit
+    
 
-killHero :: Unit -> IO()
-killHero unit = do
-    putStrLn (getName unit ++ " morreu.")
-    return DeadUnit 
-    exitSuccess
-
-killEnemy :: Unit -> IO()
-killEnemy unit = do
-    putStrLn (getName unit ++ " morreu.")
-    return DeadUnit 
-    exitSuccess
-
-heroTurn :: Unit -> Unit -> IO()
+heroTurn :: Unit -> Unit -> IO Unit
 heroTurn hero enemy = do
     drawUnitStat hero enemy
     putStr "hero (atq, cura): "
-    if isDead(hero) then  (killHero hero)
+    if isDead(hero) then (return DeadUnit)
     else
         do
             action <- getLine
@@ -62,11 +51,11 @@ heroTurn hero enemy = do
                     putStrLn "Movimento inválido"
                     heroTurn hero enemy
 
-enemyTurn :: Unit -> Unit -> IO()
+enemyTurn :: Unit -> Unit -> IO Unit
 enemyTurn enemy hero = do
     drawUnitStat hero enemy
     let action = if (getHP enemy) > 10 then "atq" else "cura"
-    if isDead(enemy) then (killEnemy enemy)
+    if isDead(enemy) then return hero
     else
         do
             case action of
@@ -80,4 +69,15 @@ enemyTurn enemy hero = do
                     putStrLn "Movimento inválido"
                     enemyTurn enemy hero
 
-
+combat hero enemy = do 
+    unit <- if (getSpeed hero) >= (getSpeed enemy) then (heroTurn hero enemy) else (enemyTurn enemy hero)
+    case unit of
+        DeadUnit -> do
+            putStrLn "Voce Morreu"
+            exitSuccess
+        Unit _ -> do
+            case (getClass enemy) of
+                Archer -> return (setHP (setAttack unit ((getAttack unit)+1)) (getMaxHP unit))
+                Warrior -> return (setHP (setDefense unit ((getDefense unit)+1)) (getMaxHP unit))
+                Wizard -> return (setHP (setSpeed unit ((getSpeed unit)+1)) (getMaxHP unit))
+           

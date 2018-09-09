@@ -7,16 +7,21 @@ Projeto criado com intuito acadêmico. Objetiva-se desenvolver conceitos de ling
 ## 2. Membros
 
 * Andrew Lucas - 16/0023921
-* João Egewarth -
 * Miguel Pimentel - 14/0156143
-* Vitor Gomes  -
+* Vitor Gomes -
 
 ## 3. Executando
+
+* Adicionar pacotes Externos:
+
+````
+  cabal install split
+````
 
 * Criar executável:
 
 ````
-  make 
+  make
 ````
 
 * Executar:
@@ -30,3 +35,4 @@ Projeto criado com intuito acadêmico. Objetiva-se desenvolver conceitos de ling
 ````
   make clean
 ````
+

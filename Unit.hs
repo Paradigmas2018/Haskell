@@ -11,7 +11,9 @@ module Unit
   Attributes(..),
   showUnit,
   createUnit,
+  setName,
   setHP,
+  setClass,
   setAttack,
   setDefense,
   setSpeed,
@@ -25,8 +27,6 @@ module Unit
   isDead
 ) where
 
-import Data.List.Split
-
 
 type UnitName = String -- Nome da Unidade
 type HP = Int -- Pontos de vida atual
@@ -38,7 +38,7 @@ type IsDead = Bool -- Verificador se a unidade está viva
 type IsPlayer = Bool -- Verifica se é controlada pelo jogador
 data Class = Archer | Warrior | Wizard deriving (Show, Read, Eq) -- Classe da unidade, para determinar habilidade
 data Attributes = Attributes (HP, MaxHP, Attack, Defense, Speed) deriving (Show, Read, Eq)  -- Representação de todos atributos em uma tupla
-data Unit = DeadUnit | Unit (UnitName, Class, Attributes, IsDead, IsPlayer)  deriving (Show, Read, Eq) -- Dados da Unidade
+data Unit = Null | DeadUnit | Unit (UnitName, Class, Attributes, IsDead, IsPlayer)  deriving (Show, Read, Eq) -- Dados da Unidade
 
 showUnit :: Unit -> [Char]
 showUnit (Unit (name, clas, Attributes (hp, maxhp, atk, def, spd), dead, player)) = do
@@ -61,6 +61,13 @@ getName (Unit (name, Wizard, _, _, _)) = name ++ ", o mago"
 
 getClass :: Unit -> Class
 getClass (Unit (_, cls, _, _, _)) = cls
+
+setName :: Unit -> String -> Unit
+setName (Unit (name, clas, (Attributes (hp, maxHP, atk, def, spd)), dead, player)) newName = (Unit (newName, clas, Attributes (hp, maxHP, atk, def, spd), dead, player))
+
+setClass :: Unit -> Class -> Unit
+setClass (Unit (name, clas, (Attributes (hp, maxHP, atk, def, spd)), dead, player)) newClass = (Unit (name, newClass, Attributes (hp, maxHP, atk, def, spd), dead, player))
+
 
 -- Retorna o HP atual da unidade
 getHP :: Unit -> Int
