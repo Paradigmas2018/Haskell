@@ -3,6 +3,8 @@
   Description : Tree that contains stages for archer
 -}
 module MapTree (
+    MapTree(..),
+    MapNode(..),
     storyMap,
     createMapNode,
     getHistoryString,
@@ -70,5 +72,5 @@ getHistoryString (MapNode((_, _, h))) = h
 getValue :: MapNode -> Enemy
 getValue (MapNode(_, e, _)) = e
 
-getVillageName :: MapNode -> String
-getVillageName (MapNode(n, _, _)) = n
+-- getVillageName :: MapTree -> String
+getVillageName (Node (MapNode(n, _, _)) _ _ _ _) = n
