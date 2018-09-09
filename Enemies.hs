@@ -20,6 +20,7 @@ module Enemies
 
 import Unit
 
+-- Enemies creation
 ramsor = createUnit "Ramsor" Warrior 5 5 5 5 False
 mynxe = createUnit "Mynx" Wizard 10 9 2 12 False
 anmi = createUnit "Anmi" Archer 8 6 4 4 False
