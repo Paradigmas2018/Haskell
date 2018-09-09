@@ -8,7 +8,7 @@ Projeto criado com intuito acadêmico. Objetiva-se desenvolver conceitos de ling
 
 * Andrew Lucas - 16/0023921
 * Miguel Pimentel - 14/0156143
-* Vitor Gomes -
+* Vitor Gomes  - 15/0048106
 
 ## 3. Executando
 
@@ -35,4 +35,3 @@ Projeto criado com intuito acadêmico. Objetiva-se desenvolver conceitos de ling
 ````
   make clean
 ````
-
