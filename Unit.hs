@@ -27,6 +27,7 @@ module Unit
 
 import Data.List.Split
 
+
 type UnitName = String -- Nome da Unidade
 type HP = Int -- Pontos de vida atual
 type MaxHP = Int -- Pontos de vida Maximo

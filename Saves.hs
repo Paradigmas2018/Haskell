@@ -6,18 +6,32 @@ module Saves
 
 import System.IO
 import Unit
+import Text.Read
+import Data.List.Split
 
 saveGameData :: Unit -> IO ()
 saveGameData unit = do
-    file <- openFile "save.txt" WriteMode
-    hPrint file (unit)
-    putStrLn "Escrito com sucesso"
-    hFlush file
-    hClose file
+    writeFile "save.txt" $ showUnit unit
 
 
+-- loadGameData:: Unit
 loadGameData = do
-    file <- openFile "save.txt" ReadMode
-    content <- hGetContents file
-    let unit = (read (content) :: Unit)
+    unit <- readFile "save.txt"
+    return (splitOn "," unit)
+
+loadUnit = do
+    gameData <- loadGameData
+    let unit = createUnit (getData gameData 0) 
+                    (read (getData gameData 1)) 
+                        (read (getData gameData 2)) 
+                            (read (getData gameData 4)) 
+                                (read (getData gameData 5)) 
+                                    (read (getData gameData 6)) 
+                                        (read (getData gameData 8))
     return unit
+
+    -- Usar read
+
+getData [] _ = ""
+getData (x:xs) 0 = x
+getData (x:xs) num = getData xs (num-1)

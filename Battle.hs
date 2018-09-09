@@ -45,32 +45,37 @@ killEnemy unit = do
 
 heroTurn :: Unit -> Unit -> IO()
 heroTurn hero enemy = do
-    drawUnitStat hero
-    drawUnitStat enemy
-    putStr "hero (atk, heal): "
+    drawUnitStat hero enemy
+    putStr "hero (atq, cura): "
     if isDead(hero) then  (killHero hero)
     else
         do
             action <- getLine
             case action of
-                "atk" -> enemyTurn (updateUnit enemy (Attack (hero, enemy))) hero
-                "heal" -> enemyTurn enemy (updateUnit hero (Heal (hero)))
+                "atq" -> do
+                    putStrLn $ (getName hero) ++ " atacou " ++ (getName enemy)
+                    enemyTurn (updateUnit enemy (Attack (hero, enemy))) hero
+                "cura" -> do
+                    putStrLn $ (getName hero) ++ " se curou."
+                    enemyTurn enemy (updateUnit hero (Heal (hero)))
                 otherwise -> do 
                     putStrLn "Movimento inválido"
                     heroTurn hero enemy
 
 enemyTurn :: Unit -> Unit -> IO()
 enemyTurn enemy hero = do
-    drawUnitStat hero
-    drawUnitStat enemy
-    putStr "enemy (atk, heal): "
+    drawUnitStat hero enemy
+    let action = if (getHP enemy) > 10 then "atq" else "cura"
     if isDead(enemy) then (killEnemy enemy)
     else
         do
-            action <- getLine
             case action of
-                "atk" -> heroTurn (updateUnit hero (Attack (enemy, hero))) enemy
-                "heal" -> heroTurn hero (updateUnit enemy (Heal (enemy)))
+                "atq" -> do
+                    putStrLn $ (getName enemy) ++ " atacou " ++ (getName hero)
+                    heroTurn (updateUnit hero (Attack (enemy, hero))) enemy
+                "cura" -> do
+                    putStrLn $ (getName enemy) ++ " se curou."
+                    heroTurn hero (updateUnit enemy (Heal (enemy)))
                 otherwise -> do 
                     putStrLn "Movimento inválido"
                     enemyTurn enemy hero
