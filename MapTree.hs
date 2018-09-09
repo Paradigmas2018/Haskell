@@ -7,6 +7,7 @@ module MapTree (
 ) where
 
 import Unit
+import Enemies
 
 type NorthVillage = String -- Villages localized in north
 type SouthVillage = String -- Villages localized in south
@@ -33,29 +34,46 @@ data MapTree a = Null
 
 Node 5 (Node 3 Null Null) (Node 2 Null Null)
 
--- Create MapTree
-getMapTree :: Unit -> MapTree [Char]
-getMapTree = ("Map"
-                (Node "Warrior"
-                    (Node "North Village" Null Null)
-                    (Node "South Village" Null Null)
-                )
-                (Node "Archer"
-                    (Node "East Village" Null Null)
-                    (Node "West Village" Null Null)
-                )
+-- MapTree
+
+getMap :: MapTree 
+getMap = (MapNode("Initial Game", _ ,  _)
+            (MapNode("North Village", _ ,  _)
+                MapNode( "Tresting", ramsor, "")
+                MapNode( "Tresting", mynxe, "")
+                MapNode( "Tresting", anmi, "")
+                MapNode( "Tresting", ghaaaauya, "")
             )
+            (MapNode("South Village", _ ,  _)
+                MapNode("Meridell", lohn, "")
+                MapNode("Meridell", mountainWolf, "")
+                MapNode("Meridell", malfoy, "")
+                MapNode("Meridell", robinhoODoFilme, "")
+            )
+            (MapNode("East Village", _ ,  _)
+                MapNode("Phorofor", singleEyedGladiator, "")
+                MapNode("Phorofor", itzel, "")
+                MapNode("Phorofor", hydell, "")
+                MapNode("Phorofor", durgess, "")
+            )
+            (MapNode("West Village", _ ,  _)
+                MapNode("Ramtor", terak, "")
+                MapNode("Ramtor", ily, "")
+                MapNode("Ramtor", nox, "")
+                MapNode("Ramtor", ghaaaauya, "")
+            )
+        )
 
 -- Create MapTree node
 createMapNode :: Village -> Value -> HistoryString -> MapNode
 createMapNode village value history = MapNode(village, value, history)
 
--- Testing values with simple tree
+-- For testing pourpose
 sumNodes :: Num a => Tree a -> a
 sumNodes Null = 0
 sumNodes (Node n t1 t2) = n + sumNodes t1 + sumNodes t2
 
--- 
+-- Get Branch from a value
 getBranch :: Tree a -> String -> Tree a
 getBranch Null value = Null
 getBranch Tree a value = do
