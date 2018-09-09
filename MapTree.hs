@@ -17,16 +17,45 @@ type WestVillage = String -- Vilages localized in west
 -- Represent Villages
 data Village = NorthVillage | SouthVillage | EastVillage | WestVillage deriving (Show)
 
+-- Tree Structure
+type HistoryString = String
+type Value = Int
+
+data MapNode = MapNode(Village, Value, HistoryString) -- MapTree node
+
+-- FIXME: - Delete - User for testing pourpose
+data Tree a = Null
+          | Node a (Tree a) (Tree a) deriving(Show)
+
 -- Tree for each Village
 data MapTree a = Null
                | Node Village (MapTree a) (MapTree a) (MapTree a) (MapTree a)  deriving (Show)
 
--- Create Tree RPG actions
-actionTree :: MapTree [Char]
-actionTree = 
+-- Create MapTree
+getMapTree :: MapTree [Char]
+getMapTree = 
     Node "Warrior"
       (Node "North Village" Null Null)
       (Node "South Village" Null Null)
       (Node "East Village" Null Null)
       (Node "West Village" Null Null)
- 
+
+-- Create MapTree node
+createMapNode :: Village -> Value -> HistoryString -> MapNode
+createMapNode village value history = MapNode(village, value, history)
+
+-- Testing values with simple tree
+sumNodes :: Num a => Tree a -> a
+sumNodes Null = 0
+sumNodes (Node n t1 t2) = n + sumNodes t1 + sumNodes t2
+
+-- Getters
+
+getHistoryString :: MapNode -> String
+getHistoryString (MapNode((_, _, h))) = h 
+
+getValue :: MapNode -> Int
+getValue (MapNode(_, v, _)) = v
+
+getVillageName :: MapNode -> String
+getVillageName (MapNode(n, _, _)) = n
