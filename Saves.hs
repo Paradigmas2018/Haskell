@@ -1,3 +1,7 @@
+{-
+    Module      : Saves
+    Description : Save player status according to game
+-}
 module Saves 
 (
   saveGameData,

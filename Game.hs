@@ -1,3 +1,7 @@
+{-
+    Module      : Game
+    Description : Core, Handler with submodules and its integration
+-}
 module Game where
 
 import Unit

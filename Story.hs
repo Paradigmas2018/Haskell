@@ -1,3 +1,7 @@
+{-
+    Module      : Story
+    Description : Story core data - Instances
+-}
 module Story
     (
     beginning,
