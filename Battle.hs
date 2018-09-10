@@ -3,6 +3,7 @@ module Battle where
 import Unit
 import Interface
 import System.Exit
+import System.Console.ANSI
 
 data Action = Attack (Unit, Unit) | Heal (Unit)
 
@@ -70,7 +71,9 @@ enemyTurn enemy hero = do
                     enemyTurn enemy hero
 
 combat hero enemy = do 
+
     unit <- if (getSpeed hero) >= (getSpeed enemy) then (heroTurn hero enemy) else (enemyTurn enemy hero)
+    clearScreen
     case unit of
         DeadUnit -> do
             putStrLn "Voce Morreu"

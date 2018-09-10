@@ -39,9 +39,9 @@ beginning = putStrLn "Voce acorda em uma casa vazia. 'O que esta acontecendo?'\
 \ O que voce quer pegar?"
 
 -- Weapon choices dialogue
-sword = "Voce pega a espada e "
-wand = "Voce pega a varinha e "
-bow = "Voce pega o arco e a aljava e "
+sword = "Voce pega a espada "
+wand = "Voce pega a varinha "
+bow = "Voce pega o arco e a aljava "
 
 -- Prints weapon choice and dialogue
 printChoice xs = putStrLn $ xs ++ "imeadiatamente um flashback passa por\
