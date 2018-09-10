@@ -4,6 +4,7 @@ import Unit
 import MapTree
 import Battle
 import Story
+import Saves
 import System.Console.ANSI
 import System.IO
 import System.Exit  
@@ -16,12 +17,27 @@ playGame unit (Node (MapNode(village, enemy, story)) (a) (b)) = do
         putStrLn $ story
         stop <- getLine
         hero <- combat unit enemy
+        wantSave hero
         choice hero a b
     else do
         putStrLn $ story
         stop <- getLine
         choice unit a b
 
+wantSave hero = do
+    putStrLn $ "Quer sair para descansar?"
+    ch <- getLine
+    case ch of
+        "sim" -> do 
+            putStrLn $ "Deseja salvar?"
+            ch <- getLine
+            case ch of
+                "sim" -> do 
+                    saveGameData hero 
+                    exitSuccess
+                "nao" -> exitSuccess
+        "nao" -> return hero
+        otherwise->  wantSave hero
 
 -- choice :: Unit -> MapTree -> MapTree -> MapTree -> MapTree -> IO()
 choice hero Null Null = do
@@ -83,7 +99,10 @@ readClass = do
       readClass
 
 -- loadGame :: IO()
-loadGame = exitSuccess
+loadGame = do
+  unit <- loadUnit
+  getLine
+  playGame unit storyMap
 
 -- exitGame :: IO()
 exitGame = exitSuccess

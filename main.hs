@@ -4,4 +4,4 @@
 -}
 
 main = do
-      putStrLn "Hello, world!"
+    drawStartScreen
