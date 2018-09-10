@@ -18,26 +18,29 @@ playGame unit (Node (MapNode(village, enemy, story)) (a) (b)) = do
         putStrLn $ startBattleDialogue
         stop <- getLine
         hero <- combat unit enemy
-        wantSave hero
+        leaveGame hero
         choice hero a b
     else do
         putStrLn $ story
         choice unit a b
 
-wantSave hero = do
-    putStrLn $ "Quer sair para descansar?"
+leaveGame hero = do
+    putStrLn $ "Quer sair para descansar? Digite 'sim' ou 'nao'."
     ch <- getLine
     case ch of
-        "sim" -> do 
-            putStrLn $ "Deseja salvar?"
-            ch <- getLine
-            case ch of
-                "sim" -> do 
-                    saveGameData hero 
-                    exitSuccess
-                "nao" -> exitSuccess
+        "sim" -> saveGame hero
         "nao" -> return hero
-        otherwise->  wantSave hero
+        otherwise-> leaveGame hero
+
+saveGame hero = do
+  putStrLn $ "Deseja salvar antes de terminar? Por favor, digite 'sim' ou 'nao' novamente."
+  ch <- getLine
+  case ch of
+    "sim" -> do
+        saveGameData hero
+        exitSuccess
+    "nao" -> exitSuccess
+    otherwise -> saveGame hero
 
 -- choice :: Unit -> MapTree -> MapTree -> MapTree -> MapTree -> IO()
 choice hero Null Null = do
