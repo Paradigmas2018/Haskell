@@ -69,6 +69,7 @@ southVillageDialogue = "\n\n\nVocê escolheu desbravar a antiga Vila do Sul! Ao 
 startBattleDialogue = "\n\nAperte 'Enter' para comecar a batalha! \n\n"
 
 -- Prints weapon choice and dialogue
+printChoice :: [Char] -> IO ()
 printChoice xs = putStrLn $ xs ++ "imeadiatamente um flashback passa por\
 \ sua mente. Imagens confusas. Uma nave. Um virus. Tripulacao.\
 \ A Terra. Um nome: Talinia. Voce resolve sair e tentar entender o que tudo\

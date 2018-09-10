@@ -43,9 +43,11 @@ leaveGame hero (Node (MapNode(village, enemy, story)) (a) (b)) = do
         "sim" -> return hero
         otherwise-> leaveGame hero (Node (MapNode(village, enemy, story)) (a) (b))
 
+loseHp :: Monad m => Unit -> m Unit
 loseHp hero = do
   return $ setHP hero $ getHP hero - 5
 
+improveAttack :: Monad m => Unit -> m Unit
 improveAttack hero = do
   return $ setAttack hero $ getAttack hero + 2
 

@@ -76,6 +76,7 @@ enemyTurn enemy hero = do
                     putStrLn "Movimento inválido"
                     enemyTurn enemy hero
 
+combat :: Unit -> Unit -> IO Unit
 combat hero enemy = do
 
     unit <- if (getSpeed hero) >= (getSpeed enemy) then (heroTurn hero enemy) else (enemyTurn enemy hero)
@@ -87,6 +88,6 @@ combat hero enemy = do
         Unit _ -> do
             putStrLn $ battleWonDialogue
             case (getClass enemy) of
-                Archer -> return (setAttack unit ((getAttack unit)+1)) 
-                Warrior -> return (setDefense unit ((getDefense unit)+1)) 
-                Wizard -> return (setSpeed unit ((getSpeed unit)+1)) 
+                Archer -> return (setAttack unit ((getAttack unit)+1))
+                Warrior -> return (setDefense unit ((getDefense unit)+1))
+                Wizard -> return (setSpeed unit ((getSpeed unit)+1))
