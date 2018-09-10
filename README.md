@@ -15,7 +15,16 @@ Projeto criado com intuito acadêmico. Objetiva-se desenvolver conceitos de ling
 * Adicionar pacotes Externos:
 
 ````
-  cabal install split
+  cabal install split && cabal install ansi-terminal
+
+````
+
+De maneira alternativa, pode-se utilizar o comando **make install**:
+
+* Instando Dependências externas:
+
+````
+  make install
 ````
 
 * Criar executável:
