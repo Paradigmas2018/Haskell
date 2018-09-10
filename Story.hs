@@ -64,7 +64,7 @@ startBattleDialogue = "\n\nAperte 'Enter' para comecar a batalha! \n\n"
 printChoice xs = putStrLn $ xs ++ "imeadiatamente um flashback passa por\
 \ sua mente. Imagens confusas. Uma nave. Um virus. Tripulacao.\
 \ A Terra. Um nome: Talinia. Voce resolve sair e tentar entender o que tudo\
-\ isso significa. \n\n Aperte 'Enter' para continuar."
+\ isso significa. \n\n"
 
 -- Battle won dialogue
 battleWonDialogue = "Voce ganhou a batalha!"
