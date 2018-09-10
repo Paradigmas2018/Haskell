@@ -1,3 +1,7 @@
+{-
+    Module      : BattleEnemies
+    Description : Handler with attributes of Unit data when in Battle
+-}
 module Battle where
 
 import Unit
@@ -83,6 +87,6 @@ combat hero enemy = do
         Unit _ -> do
             putStrLn $ battleWonDialogue
             case (getClass enemy) of
-                Archer -> return (setHP (setAttack unit ((getAttack unit)+1)) (getMaxHP unit))
-                Warrior -> return (setHP (setDefense unit ((getDefense unit)+1)) (getMaxHP unit))
-                Wizard -> return (setHP (setSpeed unit ((getSpeed unit)+1)) (getMaxHP unit))
+                Archer -> return (setAttack unit ((getAttack unit)+1)) 
+                Warrior -> return (setDefense unit ((getDefense unit)+1)) 
+                Wizard -> return (setSpeed unit ((getSpeed unit)+1)) 
