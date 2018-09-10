@@ -2,23 +2,27 @@ module Saves
 (
   saveGameData,
   loadGameData,
-  loadUnit
+  loadUnit,
+  loadMap
 ) where
 
 import System.IO
 import Unit
+import MapTree
 import Text.Read
 import Data.List.Split
+import System.Directory (renameFile)
 
-saveGameData :: Unit -> IO ()
-saveGameData unit = do
-    writeFile "save.txt" $ showUnit unit
+-- saveGameData :: Unit -> MapNode -> IO ()
+saveGameData unit map= do
+    writeFile "tmp.txt" $ ((showUnit unit)++";"++(show map))
+    renameFile "tmp.txt" "save.txt"
 
 
 -- loadGameData:: Unit
 loadGameData = do
     unit <- readFile "save.txt"
-    return (splitOn "," unit)
+    return (splitOn ";" unit)
 
 loadUnit = do
     gameData <- loadGameData
@@ -30,6 +34,11 @@ loadUnit = do
                                     (read (getData gameData 6)) 
                                         (read (getData gameData 8))
     return unit
+
+loadMap = do
+    gameData <- loadGameData
+    let map = (read (getData gameData 9) :: MapTree a)
+    return map
 
     -- Usar read
 

@@ -10,17 +10,17 @@ data Action = Attack (Unit, Unit) | Heal (Unit)
 
 actionValue :: Action -> Int
 actionValue (Attack (hero, enemy))
-    | getClass hero == Archer && getClass enemy == Warrior = round (-(((attack*speed)/3) - defense * (boostDef)))
-    | getClass hero == Archer && getClass enemy == Wizard = round (-(( (attack*speed)/3) * (boostAtk) - defense))
-    | getClass hero == Wizard && getClass enemy == Archer = round (-(((attack*speed)/3) - defense * (boostDef)))
-    | getClass hero == Wizard && getClass enemy == Warrior = round (-(((attack*speed)/3) * (boostAtk) - defense))
-    | getClass hero == Warrior && getClass enemy == Wizard = round (-(((attack*speed)/3) - defense * (boostDef)))
-    | getClass hero == Warrior && getClass enemy == Archer = round (-(((attack*speed)/3) * (boostAtk) - defense))
-    | otherwise = round (-(((attack*speed)/3) + defense))
+    | getClass hero == Archer && getClass enemy == Warrior = -(abs (round (-(((attack*speed)/3) - defense * (boostDef)))))
+    | getClass hero == Archer && getClass enemy == Wizard = -(abs (round (-(( (attack*speed)/3) * (boostAtk) - defense))))
+    | getClass hero == Wizard && getClass enemy == Archer = -(abs (round (-(((attack*speed)/3) - defense * (boostDef)))))
+    | getClass hero == Wizard && getClass enemy == Warrior = -(abs (round (-(((attack*speed)/3) * (boostAtk) - defense))))
+    | getClass hero == Warrior && getClass enemy == Wizard = -(abs (round (-(((attack*speed)/3) - defense * (boostDef)))))
+    | getClass hero == Warrior && getClass enemy == Archer = -(abs (round (-(((attack*speed)/3) * (boostAtk) - defense))))
+    | otherwise = -(abs (round (-(((attack*speed)/3) + defense))))
     where attack  = fromIntegral (getAttack hero) :: Float
           speed   = fromIntegral (getSpeed hero) :: Float
           defense = fromIntegral (getDefense enemy) :: Float
-          boostAtk = 1.2
+          boostAtk = 1.3
           boostDef = 1.3
 actionValue (Heal (unit)) = (if (hp + potion) >= maxHP then maxHP-hp else potion)
     where hp = getHP unit
@@ -42,12 +42,13 @@ heroTurn hero enemy = do
     else
         do
             action <- getLine
+            clearScreen
             case action of
                 "1" -> do
-                    putStrLn $ (getName hero) ++ " atacou " ++ (getName enemy)
+                    putStrLn $ "\n ==>"++(getName hero) ++ " atacou " ++ (getName enemy)++"\n"
                     enemyTurn (updateUnit enemy (Attack (hero, enemy))) hero
                 "2" -> do
-                    putStrLn $ (getName hero) ++ " se curou."
+                    putStrLn $ "\n ==>"++(getName hero) ++ " se curou."++"\n"
                     enemyTurn enemy (updateUnit hero (Heal (hero)))
                 otherwise -> do
                     putStrLn "Movimento inválido"
@@ -55,17 +56,17 @@ heroTurn hero enemy = do
 
 enemyTurn :: Unit -> Unit -> IO Unit
 enemyTurn enemy hero = do
-    drawUnitStat hero enemy
+    -- drawUnitStat hero enemy
     let action = if (getHP enemy) > 10 then "1" else "2"
     if isDead(enemy) then return hero
     else
         do
             case action of
                 "1" -> do
-                    putStrLn $ (getName enemy) ++ " atacou " ++ (getName hero)
+                    putStrLn $ "\n ==>"++(getName enemy) ++ " atacou " ++ (getName hero)++"\n"
                     heroTurn (updateUnit hero (Attack (enemy, hero))) enemy
                 "2" -> do
-                    putStrLn $ (getName enemy) ++ " se curou."
+                    putStrLn $ "\n ==>"++(getName enemy) ++ " se curou."++"\n"
                     heroTurn hero (updateUnit enemy (Heal (enemy)))
                 otherwise -> do
                     putStrLn "Movimento inválido"

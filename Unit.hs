@@ -42,19 +42,19 @@ data Unit = NullUnity | DeadUnit | Unit (UnitName, Class, Attributes, IsDead, Is
 
 showUnit :: Unit -> [Char]
 showUnit (Unit (name, clas, Attributes (hp, maxhp, atk, def, spd), dead, player)) = do
-  (name) ++","++ 
-    (show clas)  ++","++  
-      (show hp) ++","++
-        (show maxhp) ++","++
-          (show atk) ++","++
-            (show def) ++","++
-              (show spd) ++","++
-                (show dead) ++","++ 
+  (name) ++";"++ 
+    (show clas)  ++";"++  
+      (show hp) ++";"++
+        (show maxhp) ++";"++
+          (show atk) ++";"++
+            (show def) ++";"++
+              (show spd) ++";"++
+                (show dead) ++";"++ 
                   (show player)
 
 -- Retorna o nome da Unidade
 getName :: Unit -> String
-getName (Unit ("", _, _, _, _)) = "unknown"
+getName (Unit ("", _, _, _, _)) = "O Desconhecido"
 getName (Unit (name, Archer, _, _, _)) = name ++ ", o arqueiro"
 getName (Unit (name, Warrior, _, _, _)) = name ++ ", o guerreiro"
 getName (Unit (name, Wizard, _, _, _)) = name ++ ", o mago"

@@ -23,11 +23,11 @@ type Village =  String
 type StoryString = String
 type Enemy = Unit
 
-data MapNode = MapNode(Village, Enemy, StoryString) deriving(Show) -- MapTree node
+data MapNode = MapNode(Village, Enemy, StoryString) deriving(Read, Show) -- MapTree node
 
 -- Tree for game
 data MapTree a = Null
-             | Node MapNode (MapTree a) (MapTree a) deriving(Show)
+             | Node MapNode (MapTree a) (MapTree a) deriving(Read, Show)
 
 -- Places
 tresting = "Tresting"
