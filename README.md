@@ -43,3 +43,7 @@ De maneira alternativa, pode-se utilizar o comando **make install**:
 ````
   make clean
 ````
+
+## 4. Referências
+
+* [RPG Game](https://github.com/skiadas/BattleFTP/tree/master/src)

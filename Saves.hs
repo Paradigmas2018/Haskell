@@ -35,12 +35,13 @@ loadUnit = do
     gameData <- loadGameData
     let unit = createUnit (getData gameData 0) 
                     (read (getData gameData 1)) 
-                        (read (getData gameData 2)) 
+                        (read (getData gameData 3)) 
                             (read (getData gameData 4)) 
                                 (read (getData gameData 5)) 
                                     (read (getData gameData 6)) 
                                         (read (getData gameData 8))
-    return unit
+    let hero = setHP unit (read (getData gameData 2))
+    return hero
 
 -- Funcao que recebe uma lista dos dados do arquivo e retorna a posicao em que o mapa foi salvo
 loadMap :: IO (MapTree a)
