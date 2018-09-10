@@ -1,4 +1,4 @@
-{- 
+{-
   Module : MapTree
   Description : Tree that contains stages for archer
 -}
@@ -14,6 +14,7 @@ module MapTree (
 
 import Unit
 import Enemies
+import Story
 
 -- Represent Villages
 type Village =  String
@@ -26,39 +27,84 @@ data MapNode = MapNode(Village, Enemy, StoryString) deriving(Show) -- MapTree no
 
 -- Tree for game
 data MapTree a = Null
-             | Node MapNode (MapTree a) (MapTree a) (MapTree a) (MapTree a) deriving(Show)
+             | Node MapNode (MapTree a) (MapTree a) deriving(Show)
+
+-- Places
+tresting = "Tresting"
+meridell = "Meridell"
+phorofor = "Phorofor"
+paris = "Paris"
+
+-- Enemies' nodes for Tree
+initialNode = MapNode("Initial Game", NullUnity, "")
+ramsorNode = MapNode(tresting, ramsor, ramsorDialogue)
+mynxeNode = MapNode(meridell, mynxe, mynxeDialogue)
+anmiNode = MapNode(phorofor, anmi, anmiDialogue)
+ghaaaauyaNode = MapNode(paris, ghaaaauya, ghaaaauyaDialogue)
+lohnNode = MapNode(tresting, lohn, lohnDialogue)
+mountainWolfNode = MapNode(meridell, mountainWolf, mountainWolfDialogue)
+malfoyNode = MapNode(phorofor, malfoy, malfoyDialogue)
+robinhoODoFilmeNode = MapNode(paris, robinhoODoFilme, robinhoODoFilmeDialogue)
+singleEyedGladiatorNode = MapNode(tresting, singleEyedGladiator, singleEyedGladiatorDialogue)
+itzelNode = MapNode(paris, itzel, itzelDialogue)
+hydellNode = MapNode(meridell, hydell, hydellDialogue)
+durgessNode = MapNode(phorofor, durgess, durgessDialogue)
+terakNode = MapNode(tresting, terak, terakDialogue)
+ilyNode = MapNode(meridell, ily, ilyDialogue)
+noxNode = MapNode(phorofor, nox, noxDialogue)
+kingForgusGhostNode = MapNode(paris, kingForgusGhost, kingForgusGhostDialogue)
+
 
 -- MapTree
+leftSide = (Node (MapNode("North Village", NullUnity , ""))
+     (Node ramsorNode
+       (Node mynxeNode
+         (Node ghaaaauyaNode
+           (Node lohnNode Null Null) (Node mountainWolfNode Null Null))
+         (Node malfoyNode
+           (Node robinhoODoFilmeNode Null Null) (Node singleEyedGladiatorNode Null Null)))
+       (Node anmiNode
+         (Node itzelNode
+           (Node hydellNode Null Null) (Node durgessNode Null Null))
+         (Node terakNode
+           (Node ilyNode Null Null) (Node noxNode Null Null))))
+     (Node kingForgusGhostNode
+       (Node malfoyNode
+         (Node singleEyedGladiatorNode
+           (Node itzelNode Null Null) (Node hydellNode Null Null))
+         (Node noxNode
+           (Node robinhoODoFilmeNode Null Null) (Node ghaaaauyaNode Null Null)))
+       (Node anmiNode
+         (Node noxNode
+           (Node ramsorNode Null Null) (Node durgessNode Null Null))
+         (Node robinhoODoFilmeNode
+           (Node terakNode Null Null) (Node mountainWolfNode Null Null)))))
 
-storyMap = Node (MapNode("Initial Game", NullUnity, ""))
-           (
-            Node (MapNode("North Village", NullUnity , ""))
-                (Node (MapNode("Tresting", ramsor, "")) Null Null Null Null)
-                (Node (MapNode("Tresting", mynxe, "")) Null Null Null Null)
-                (Node (MapNode("Tresting", anmi, "")) Null Null Null Null)
-                (Node (MapNode("Tresting", ghaaaauya, "")) Null Null Null Null)
-            )
-           (
-            Node (MapNode("South Village", NullUnity, ""))
-                (Node (MapNode("Meridell", lohn, "")) Null Null Null Null)
-                (Node (MapNode("Meridell", mountainWolf, "")) Null Null Null Null)
-                (Node (MapNode("Meridell", malfoy, "")) Null Null Null Null)
-                (Node (MapNode("Meridell", robinhoODoFilme, "")) Null Null Null Null)
-            )
-           (
-            Node (MapNode("East Village", NullUnity, ""))
-                (Node (MapNode("Phorofor", singleEyedGladiator, "")) Null Null Null Null)
-                (Node (MapNode("Phorofor", itzel, "")) Null Null Null Null)
-                (Node (MapNode("Phorofor", hydell, "")) Null Null Null Null)
-                (Node (MapNode("Phorofor", durgess, "")) Null Null Null Null)
-            )
-           (
-            Node (MapNode("West Village", NullUnity, ""))
-                (Node (MapNode("Ramtor", terak, "")) Null Null Null Null)
-                (Node (MapNode("Ramtor", ily, "")) Null Null Null Null)
-                (Node (MapNode("Ramtor", nox, "")) Null Null Null Null)
-                (Node (MapNode("Ramtor", ghaaaauya, "")) Null Null Null Null)
-            )
+rightSide = (Node (MapNode("South Village", NullUnity , ""))
+     (Node mynxeNode
+       (Node mountainWolfNode
+         (Node anmiNode
+           (Node lohnNode Null Null) (Node robinhoODoFilmeNode Null Null))
+         (Node noxNode
+           (Node itzelNode Null Null) (Node ramsorNode Null Null)))
+       (Node malfoyNode
+         (Node itzelNode
+           (Node terakNode Null Null) (Node ramsorNode Null Null))
+         (Node ghaaaauyaNode
+           (Node ilyNode Null Null) (Node mountainWolfNode Null Null))))
+     (Node kingForgusGhostNode
+       (Node anmiNode
+         (Node terakNode
+           (Node durgessNode Null Null) (Node itzelNode Null Null))
+         (Node hydellNode
+           (Node mountainWolfNode Null Null) (Node ghaaaauyaNode Null Null)))
+       (Node ghaaaauyaNode
+         (Node ramsorNode
+           (Node mynxeNode Null Null) (Node durgessNode Null Null))
+         (Node hydellNode
+           (Node durgessNode Null Null) (Node lohnNode Null Null)))))
+           
+storyMap = Node initialNode leftSide rightSide
 
 -- Create MapTree node
 createMapNode :: Village -> Unit -> StoryString -> MapNode
@@ -67,10 +113,10 @@ createMapNode village unit history = MapNode(village, unit, history)
 -- Getters
 
 getHistoryString :: MapNode -> String
-getHistoryString (MapNode((_, _, h))) = h 
+getHistoryString (MapNode((_, _, h))) = h
 
 getValue :: MapNode -> Enemy
 getValue (MapNode(_, e, _)) = e
 
 -- getVillageName :: MapTree -> String
-getVillageName (Node (MapNode(n, _, _)) _ _ _ _) = n
+getVillageName (Node (MapNode(n, _, _)) _ _) = n
