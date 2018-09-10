@@ -1,6 +1,7 @@
 module Battle where
 
 import Unit
+import Story
 import Interface
 import System.Exit
 import System.Console.ANSI
@@ -36,16 +37,16 @@ updateUnit unit action = setHP unit (health + effect)
 heroTurn :: Unit -> Unit -> IO Unit
 heroTurn hero enemy = do
     drawUnitStat hero enemy
-    putStr "hero (atq, cura): "
+    printChoiceBattle
     if isDead(hero) then (return DeadUnit)
     else
         do
             action <- getLine
             case action of
-                "atq" -> do
+                "1" -> do
                     putStrLn $ (getName hero) ++ " atacou " ++ (getName enemy)
                     enemyTurn (updateUnit enemy (Attack (hero, enemy))) hero
-                "cura" -> do
+                "2" -> do
                     putStrLn $ (getName hero) ++ " se curou."
                     enemyTurn enemy (updateUnit hero (Heal (hero)))
                 otherwise -> do 
@@ -55,15 +56,15 @@ heroTurn hero enemy = do
 enemyTurn :: Unit -> Unit -> IO Unit
 enemyTurn enemy hero = do
     drawUnitStat hero enemy
-    let action = if (getHP enemy) > 10 then "atq" else "cura"
+    let action = if (getHP enemy) > 10 then "1" else "2"
     if isDead(enemy) then return hero
     else
         do
             case action of
-                "atq" -> do
+                "1" -> do
                     putStrLn $ (getName enemy) ++ " atacou " ++ (getName hero)
                     heroTurn (updateUnit hero (Attack (enemy, hero))) enemy
-                "cura" -> do
+                "2" -> do
                     putStrLn $ (getName enemy) ++ " se curou."
                     heroTurn hero (updateUnit enemy (Heal (enemy)))
                 otherwise -> do 
@@ -76,7 +77,7 @@ combat hero enemy = do
     clearScreen
     case unit of
         DeadUnit -> do
-            putStrLn "Voce Morreu"
+            putStrLn $ endGameDeath
             exitSuccess
         Unit _ -> do
             case (getClass enemy) of

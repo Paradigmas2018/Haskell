@@ -39,9 +39,9 @@ beginning = putStrLn "Voce acorda em uma casa vazia. 'O que esta acontecendo?'\
 \ O que voce quer pegar?"
 
 -- Weapon choices dialogue
-sword = "Voce pega a espada "
-wand = "Voce pega a varinha "
-bow = "Voce pega o arco e a aljava "
+sword = "Voce pega a espada"
+wand = "Voce pega a varinha"
+bow = "Voce pega o arco e a aljava"
 
 -- Prints weapon choice and dialogue
 printChoice xs = putStrLn $ xs ++ "imeadiatamente um flashback passa por\
@@ -61,7 +61,7 @@ endGameCongrats = "Inesperadamente, voce cai e tudo fica preto. Voce nao acredit
 \tripulacao, sua missao. \n\n Parabens!"
 
 -- Prints enemy dialogue and battle choices
-printChoiceBattle xs = putStrLn $ xs ++ "\n\nVoce decide: \n1 - Atacar\n2 - Curar-se"
+printChoiceBattle = putStrLn $ "\n\nVoce decide: \n1 - Atacar\n2 - Curar-se"
 
 -- Enemies dialogues
 ramsorDialogue = "Voce encontra o grande guerreiro Ramsor.\n\n\
