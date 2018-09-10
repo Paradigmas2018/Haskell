@@ -1,6 +1,6 @@
 {-
     Module      : Game
-    Description : Core, Handler with submodules and its integration
+    Description : Core, Handler with submodules and its integration. Executes games
 -}
 module Game where
 
@@ -13,21 +13,20 @@ import System.Console.ANSI
 import System.IO
 import System.Exit
 
--- playGame :: Unit -> MapTree -> IO ()
+playGame :: Unit -> MapTree a -> IO ()
 playGame unit Null = do
     putStrLn $ endGameCongrats
+playGame unit (Node (MapNode(village, NullUnity, story)) (a) (b)) = do
+    putStrLn $ story
+    choice unit a b
 playGame unit (Node (MapNode(village, enemy, story)) (a) (b)) = do
-    if enemy /= NullUnity then do
-        putStrLn $ "\n\n\n" ++ story
-        -- putStrLn $ startBattleDialogue
-        -- stop <- getLine
-        leaveGame unit (Node (MapNode(village, enemy, story)) (a) (b))
-        hero <- combat unit enemy
-        choice hero a b
-    else do
-        putStrLn $ story
-        choice unit a b
+    putStrLn $ "\n\n\n" ++ story
+    leaveGame unit (Node (MapNode(village, enemy, story)) (a) (b))
+    hero <- combat unit enemy
+    choice hero a b
+        
 
+leaveGame :: Unit -> MapTree a -> IO Unit
 leaveGame hero (Node (MapNode(village, enemy, story)) (a) (b)) = do
     putStrLn $ "Quer lutar? Digite 'sim' ou 'nao'."
     ch <- getLine
@@ -36,6 +35,7 @@ leaveGame hero (Node (MapNode(village, enemy, story)) (a) (b)) = do
         "sim" -> return hero
         otherwise-> leaveGame hero (Node (MapNode(village, enemy, story)) (a) (b))
 
+saveGame :: Unit -> MapTree a -> IO b
 saveGame hero (Node (MapNode(village, enemy, story)) (a) (b)) = do
   putStrLn $ "Deseja salvar antes de sair? Por favor, digite 'sim' ou 'nao' novamente."
   ch <- getLine
@@ -46,7 +46,7 @@ saveGame hero (Node (MapNode(village, enemy, story)) (a) (b)) = do
     "nao" -> exitSuccess
     otherwise -> saveGame hero (Node (MapNode(village, enemy, story)) (a) (b))
 
--- choice :: Unit -> MapTree -> MapTree -> MapTree -> MapTree -> IO()
+choice :: Unit -> MapTree a -> MapTree b -> IO()
 choice hero Null Null = do
     playGame hero Null
 choice hero a b = do
@@ -58,7 +58,7 @@ choice hero a b = do
         otherwise -> (choice hero a b)
 
 
--- drawStartScreen :: IO()
+drawStartScreen :: IO()
 drawStartScreen = do
   putStrLn $ "#####  RPGaskell  #####"
   putStrLn $ "1 <- Novo Jogo"
@@ -71,18 +71,21 @@ drawStartScreen = do
     "3" -> exitGame;
 
 
+newGame :: IO ()
 newGame = do
   name <- readName
   cls <- readClass
   let unit = createUnit name cls 100 10 10 10 True
   playGame unit storyMap
 
+readName :: IO String
 readName = do
   clearScreen
   putStrLn $ "Como voce se chama? "
   name <- getLine
   return name
 
+readClass :: IO Class
 readClass = do
   clearScreen
   beginning
@@ -103,11 +106,11 @@ readClass = do
       ch <- getChar
       readClass
 
--- loadGame :: IO()
+loadGame :: IO()
 loadGame = do
   unit <- loadUnit
   map <- loadMap
   playGame unit map
 
--- exitGame :: IO()
+exitGame :: IO a
 exitGame = exitSuccess

@@ -118,5 +118,5 @@ getHistoryString (MapNode((_, _, h))) = h
 getValue :: MapNode -> Enemy
 getValue (MapNode(_, e, _)) = e
 
--- getVillageName :: MapTree -> String
+getVillageName :: MapTree a -> String
 getVillageName (Node (MapNode(n, _, _)) _ _) = n
