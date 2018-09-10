@@ -30,7 +30,11 @@ module Story
     northVillageDialogue,
     southVillageDialogue,
     startBattleDialogue,
+    bombDialogue,
+    battleFairyDialogue
     ) where
+
+import Unit
 
 -- Beginning of the story dialogue
 beginning = putStrLn "Voce acorda em uma casa vazia. 'O que esta acontecendo?'\
@@ -68,6 +72,13 @@ printChoice xs = putStrLn $ xs ++ "imeadiatamente um flashback passa por\
 
 -- Battle won dialogue
 battleWonDialogue = "Voce ganhou a batalha!"
+
+-- Bomb explodes dialogue
+bombDialogue = "\n\nVoce anda um pouco e.... BOOOOOOM! Uma mina explode ao seu redor! Voce perde 5 HP!\n\n"
+
+
+-- Battle fairy dialogue
+battleFairyDialogue = "\n\nA fada da batalha aparece diante de você! Por sua bravura, ela te presenteia aumentando seu ataque! Seu ataque aumenta em dois pontos.\n\n"
 
 -- Bad ending dialogue
 endGameDeath = "Voce foi derrotado! A sua mente sucumbe no vazio e o fim chegou."

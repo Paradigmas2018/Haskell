@@ -53,17 +53,19 @@ terakNode = MapNode(tresting, terak, terakDialogue)
 ilyNode = MapNode(meridell, ily, ilyDialogue)
 noxNode = MapNode(phorofor, nox, noxDialogue)
 kingForgusGhostNode = MapNode(paris, kingForgusGhost, kingForgusGhostDialogue)
+bombNode = MapNode(tresting, NullUnity, bombDialogue)
+battleFairyNode = MapNode(paris, NullUnity, battleFairyDialogue)
 
 
 -- MapTree
 leftSide = (Node (MapNode(northVillage, NullUnity , northVillageDialogue))
      (Node ramsorNode
-       (Node mynxeNode
+       (Node bombNode
          (Node ghaaaauyaNode
            (Node lohnNode Null Null) (Node mountainWolfNode Null Null))
          (Node malfoyNode
            (Node robinhoODoFilmeNode Null Null) (Node singleEyedGladiatorNode Null Null)))
-       (Node anmiNode
+       (Node battleFairyNode
          (Node itzelNode
            (Node hydellNode Null Null) (Node durgessNode Null Null))
          (Node terakNode
@@ -77,7 +79,7 @@ leftSide = (Node (MapNode(northVillage, NullUnity , northVillageDialogue))
        (Node anmiNode
          (Node noxNode
            (Node ramsorNode Null Null) (Node durgessNode Null Null))
-         (Node robinhoODoFilmeNode
+         (Node battleFairyNode
            (Node terakNode Null Null) (Node mountainWolfNode Null Null)))))
 
 rightSide = (Node (MapNode(southVillage, NullUnity , southVillageDialogue))
@@ -90,11 +92,11 @@ rightSide = (Node (MapNode(southVillage, NullUnity , southVillageDialogue))
        (Node malfoyNode
          (Node itzelNode
            (Node terakNode Null Null) (Node ramsorNode Null Null))
-         (Node ghaaaauyaNode
+         (Node bombNode
            (Node ilyNode Null Null) (Node mountainWolfNode Null Null))))
      (Node kingForgusGhostNode
        (Node anmiNode
-         (Node terakNode
+         (Node battleFairyNode
            (Node durgessNode Null Null) (Node itzelNode Null Null))
          (Node hydellNode
            (Node mountainWolfNode Null Null) (Node ghaaaauyaNode Null Null)))

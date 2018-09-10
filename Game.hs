@@ -12,17 +12,25 @@ import System.Exit
 -- playGame :: Unit -> MapTree -> IO ()
 playGame unit Null = do
     putStrLn $ endGameCongrats
-playGame unit (Node (MapNode(village, enemy, story)) (a) (b)) = do
-    if enemy /= NullUnity then do
+playGame unit (Node (MapNode(village, enemy, story)) (a) (b))
+    |enemy /= NullUnity = do
         putStrLn $ "\n\n\n" ++ story
         -- putStrLn $ startBattleDialogue
         -- stop <- getLine
         leaveGame unit (Node (MapNode(village, enemy, story)) (a) (b))
         hero <- combat unit enemy
         choice hero a b
-    else do
+    |story == bombDialogue = do
         putStrLn $ story
-        choice unit a b
+        hero <- loseHp unit
+        choice hero a b
+    |story == battleFairyDialogue = do
+        putStrLn $ story
+        hero <- improveAttack unit
+        choice hero a b
+    |otherwise = do
+      putStrLn $ story
+      choice unit a b
 
 leaveGame hero (Node (MapNode(village, enemy, story)) (a) (b)) = do
     putStrLn $ "Quer lutar? Digite 'sim' ou 'nao'."
@@ -31,6 +39,14 @@ leaveGame hero (Node (MapNode(village, enemy, story)) (a) (b)) = do
         "nao" -> saveGame hero (Node (MapNode(village, enemy, story)) (a) (b))
         "sim" -> return hero
         otherwise-> leaveGame hero (Node (MapNode(village, enemy, story)) (a) (b))
+
+
+loseHp hero = do
+  return $ setHP hero $ getHP hero - 5
+
+improveAttack hero = do
+  return $ setAttack hero $ getAttack hero + 2
+
 
 saveGame hero (Node (MapNode(village, enemy, story)) (a) (b)) = do
   putStrLn $ "Deseja salvar antes de sair? Por favor, digite 'sim' ou 'nao' novamente."
