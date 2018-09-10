@@ -2,6 +2,7 @@ module Saves
 (
   saveGameData,
   loadGameData,
+  loadUnit
 ) where
 
 import System.IO
