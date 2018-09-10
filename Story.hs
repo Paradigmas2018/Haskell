@@ -23,7 +23,13 @@ module Story
     terakDialogue,
     ilyDialogue,
     noxDialogue,
-    kingForgusGhostDialogue
+    kingForgusGhostDialogue,
+    battleWonDialogue,
+    northVillage,
+    southVillage,
+    northVillageDialogue,
+    southVillageDialogue,
+    startBattleDialogue,
     ) where
 
 -- Beginning of the story dialogue
@@ -43,21 +49,35 @@ sword = "Voce pega a espada"
 wand = "Voce pega a varinha"
 bow = "Voce pega o arco e a aljava"
 
+-- Village names
+northVillage = "Vila do Norte"
+southVillage = "Vila do Sul"
+
+-- Entering village dialogues
+northVillageDialogue = "\n\n\nVocê escolheu desbravar a misteriosa Vila do Norte! Ao adentra-la, voce depara-se com mais duas rotas. Eai?"
+southVillageDialogue = "\n\n\nVocê escolheu desbravar a antiga Vila do Sul! Ao adentra-la, voce depara-se com mais duas rotas. Eai?"
+
+-- Start battle dialogue
+startBattleDialogue = "\n\nAperte 'Enter' para comecar a batalha! \n\n"
+
 -- Prints weapon choice and dialogue
 printChoice xs = putStrLn $ xs ++ "imeadiatamente um flashback passa por\
 \ sua mente. Imagens confusas. Uma nave. Um virus. Tripulacao.\
 \ A Terra. Um nome: Talinia. Voce resolve sair e tentar entender o que tudo\
-\ isso significa."
+\ isso significa. \n\n Aperte 'Enter' para continuar."
+
+-- Battle won dialogue
+battleWonDialogue = "Voce ganhou a batalha!"
 
 -- Bad ending dialogue
 endGameDeath = "Voce foi derrotado! A sua mente sucumbe no vazio e o fim chegou."
 
 -- Good ending dialogue
 endGameCongrats = "Inesperadamente, voce cai e tudo fica preto. Voce nao acredita - acabara \
-\de ganhar mais uma batalha. De repente, houve alguem chamar seu nome.\
-\Finalmente, consegue abrir seus olhos. A primeira coisa que vê: um rosto.\
-\É Talinia. Ela chora e sorri. Voce ouve barulhos de computadores. Uma janela\
-\enorme a esquerda. A Lua. A Terra. Voce lembra. Voce acabara de salvar a\
+\de ganhar mais uma batalha. De repente, houve alguem chamar seu nome. \
+\Finalmente, consegue abrir seus olhos. A primeira coisa que vê: um rosto. \
+\É Talinia. Ela chora e sorri. Voce ouve barulhos de computadores. Uma janela \
+\enorme a esquerda. A Lua. A Terra. Voce lembra. Voce acabara de salvar a \
 \tripulacao, sua missao. \n\n Parabens!"
 
 -- Prints enemy dialogue and battle choices

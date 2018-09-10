@@ -56,7 +56,7 @@ kingForgusGhostNode = MapNode(paris, kingForgusGhost, kingForgusGhostDialogue)
 
 
 -- MapTree
-leftSide = (Node (MapNode("North Village", NullUnity , ""))
+leftSide = (Node (MapNode(northVillage, NullUnity , northVillageDialogue))
      (Node ramsorNode
        (Node mynxeNode
          (Node ghaaaauyaNode
@@ -80,7 +80,7 @@ leftSide = (Node (MapNode("North Village", NullUnity , ""))
          (Node robinhoODoFilmeNode
            (Node terakNode Null Null) (Node mountainWolfNode Null Null)))))
 
-rightSide = (Node (MapNode("South Village", NullUnity , ""))
+rightSide = (Node (MapNode(southVillage, NullUnity , southVillageDialogue))
      (Node mynxeNode
        (Node mountainWolfNode
          (Node anmiNode
@@ -103,7 +103,7 @@ rightSide = (Node (MapNode("South Village", NullUnity , ""))
            (Node mynxeNode Null Null) (Node durgessNode Null Null))
          (Node hydellNode
            (Node durgessNode Null Null) (Node lohnNode Null Null)))))
-           
+
 storyMap = Node initialNode leftSide rightSide
 
 -- Create MapTree node
