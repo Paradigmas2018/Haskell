@@ -1,3 +1,7 @@
+{-
+    Module      : Interface
+    Description : Present Info about games Units
+-}
 module Interface
 (
   drawUnitStat

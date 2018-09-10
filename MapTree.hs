@@ -35,7 +35,7 @@ meridell = "Meridell"
 phorofor = "Phorofor"
 paris = "Paris"
 
--- Enemies' nodes for Tree
+-- Enemies nodes for Tree
 initialNode = MapNode("Initial Game", NullUnity, "")
 ramsorNode = MapNode(tresting, ramsor, ramsorDialogue)
 mynxeNode = MapNode(meridell, mynxe, mynxeDialogue)
@@ -104,7 +104,7 @@ rightSide = (Node (MapNode(southVillage, NullUnity , southVillageDialogue))
          (Node hydellNode
            (Node durgessNode Null Null) (Node lohnNode Null Null)))))
 
-storyMap = Node initialNode leftSide rightSide
+storyMap = Node initialNode leftSide rightSide -- MapTree
 
 -- Create MapTree node
 createMapNode :: Village -> Unit -> StoryString -> MapNode

@@ -1,3 +1,7 @@
+{-
+    Module      : BattleEnemies
+    Description : Handler with attributes of Unit data when in Battle
+-}
 module Battle where
 
 import Unit

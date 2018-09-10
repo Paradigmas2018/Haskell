@@ -1,6 +1,6 @@
 {-
     Module      : Game
-    Description : Modulo responsavél pelo funcionamento do jogo, com funcoes que gerenciam o jogo do inicio ao fim
+    Description : Core, Handler with submodules and its integration. Executes games
 -}
 module Game where
 

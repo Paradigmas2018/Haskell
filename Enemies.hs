@@ -1,3 +1,7 @@
+{-
+    Module      : Enemies
+    Description : Present Enemy Unit data
+-}
 module Enemies
     (
     ramsor,

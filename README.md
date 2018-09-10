@@ -16,7 +16,6 @@ Projeto criado com intuito acadêmico. Objetiva-se desenvolver conceitos de ling
 
 ````
   cabal install split && cabal install ansi-terminal
-
 ````
 
 De maneira alternativa, pode-se utilizar o comando **make install**:
